@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "440582828995",
+    "project_id": "personalcab-9af79",
+    "storage_bucket": "personalcab-9af79.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:440582828995:android:c220c1736591c909dfc376",
+        "android_client_info": {
+          "package_name": "com.fyp.personal_cab"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "440582828995-sfoqjqbfn1j0km9vagvobp60a3b8vck3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBNu7rCap6lvh4SqYMRycZgiwxQ3cqyXPo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "440582828995-sfoqjqbfn1j0km9vagvobp60a3b8vck3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
