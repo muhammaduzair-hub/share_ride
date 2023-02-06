@@ -1,6 +1,7 @@
 
 import 'package:RideShare/ui/view/auth_view.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../viewmodels/views/home_view_model.dart';
 import '../../viewmodels/views/login_viewmodel.dart';
@@ -70,7 +71,9 @@ Widget HomeDrawer(HomeViewModel model, BuildContext context){
                   ListTile(
                     title: Text("Logout", style: heading3),
                     leading: Icon(Icons.logout, color: Colors.green),
-                    onTap: (){
+                    onTap: () async{
+                      final prefs = await SharedPreferences.getInstance();
+                      await prefs.remove("user");
                       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) =>  AuthView(),), (route) => false);
                     },
                   ),

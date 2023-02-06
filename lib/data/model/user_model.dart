@@ -61,6 +61,14 @@ class UserModel {
     type = json['type'];
     password = json['password'];
     imgUrl = json['imgUrl'];
+    isDriver = json["isDriver"];
+    cnic = json["cnic"];
+    age = json["age"];
+    isVehicalAdded = json['isVehicalAdded'];
+    vehicalNo = json["vehicalNo"];
+    vehicalName = json["vehicalName"];
+    vehicalModel = json["vehicalModel"];
+    vehicalImgUrl = json["vehicalImgUrl"];
   }
 
   Map<String, dynamic> toJson() {
@@ -72,6 +80,15 @@ class UserModel {
     data['address'] = this.address;
     data['type'] = this.type;
     data['password'] = this.password;
+    data['imgUrl']= imgUrl ;
+    data["isDriver"]= isDriver ;
+    data["cnic"]= cnic ;
+    data["age"] =age ;
+    data['isVehicalAdded']=isVehicalAdded;
+    data["vehicalNo"]= vehicalNo;
+    data["vehicalName"]= vehicalName ;
+    data["vehicalModel"]=vehicalModel ;
+    data["vehicalImgUrl"]= vehicalImgUrl;
     return data;
   }
 

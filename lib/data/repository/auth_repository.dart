@@ -1,5 +1,9 @@
 
+import 'dart:convert';
 import 'dart:io';
+
+import 'package:RideShare/viewmodels/views/login_viewmodel.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../model/user_model.dart';
 import '../remote/auth_api.dart';
@@ -8,6 +12,7 @@ import '../remote/auth_api.dart';
 
 class AuthRepository{
   final AuthApi _api;
+  
 
   AuthRepository({required AuthApi api}):_api = api;
 
@@ -36,6 +41,10 @@ class AuthRepository{
 
   Future signInWithEmailAndPassword(String phoneNo, String password) async {
     UserModel result = await _api.signInWithEmailPassword(phoneNo, password);
+
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString("user", jsonEncode(LoginViewModel.signedINUser.toJson()));
+    print("user : ${await prefs.getString("user")}");
     return result;
   }
 
