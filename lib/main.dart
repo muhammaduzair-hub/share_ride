@@ -16,22 +16,19 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-
     return FutureBuilder(
       future: Firebase.initializeApp(),
       builder: (context, snapshot) {
-        if(snapshot.hasError) return Text("SomeThing went wrong");
-        if(snapshot.connectionState == ConnectionState.done){
+        if (snapshot.hasError) return Text("SomeThing went wrong");
+        if (snapshot.connectionState == ConnectionState.done) {
           return MultiProvider(
             providers: providers,
             child: RootRestorationScope(
               restorationId: 'root',
               child: MaterialApp(
                 title: "PersonalCab",
-                theme: ThemeData(
-                  primarySwatch: Colors.green
-                ),
-                home:SplashScreen(),
+                theme: ThemeData(primarySwatch: Colors.green),
+                home: SplashScreen(),
               ),
             ),
           );
@@ -41,5 +38,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-
