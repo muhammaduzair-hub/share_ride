@@ -51,6 +51,11 @@ dependencies:
   firebase_storage: ^11.0.10
   easy_splash_screen: ^1.0.4
   shared_preferences: ^2.0.17
+  advanced_search: ^2.0.0 #we dont use it anymore but we need it for advance_textField
+  group_list_view: ^1.1.1
+  responsive_sizer: ^3.0.4+4
+  http: ^0.13.4
+  flutter_rating_stars: ^1.0.3+4
 
 dev_dependencies:
   flutter_test:
@@ -77,6 +82,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - asset/images/
+    - asset/icons/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

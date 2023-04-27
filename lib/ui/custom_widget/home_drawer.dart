@@ -1,4 +1,3 @@
-
 import 'package:RideShare/ui/view/auth_view.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -9,8 +8,8 @@ import '../shared/text_styles.dart';
 import '../view/driver_home.dart';
 import '../view/profile_setting.dart';
 
-Widget HomeDrawer(HomeViewModel model, BuildContext context){
-  return  Drawer(
+Widget HomeDrawer(HomeViewModel model, BuildContext context) {
+  return Drawer(
     child: Stack(
       children: [
         Align(
@@ -28,18 +27,23 @@ Widget HomeDrawer(HomeViewModel model, BuildContext context){
                       child: Padding(
                         padding: EdgeInsets.only(top: 20, left: 20),
                         child: CircleAvatar(
-                          radius: 40,
-                          foregroundImage: LoginViewModel.signedINUser.imgUrl!=""?NetworkImage(LoginViewModel.signedINUser.imgUrl!):null,
-                          backgroundColor: Colors.black54,
-                          child: LoginViewModel.signedINUser.imgUrl ==""? Icon(Icons.person, size: 50):null
-                        ),
+                            radius: 40,
+                            foregroundImage:
+                                LoginViewModel.signedINUser.imgUrl != ""
+                                    ? NetworkImage(
+                                        LoginViewModel.signedINUser.imgUrl!)
+                                    : null,
+                            backgroundColor: Colors.black54,
+                            child: LoginViewModel.signedINUser.imgUrl == ""
+                                ? Icon(Icons.person, size: 50)
+                                : null),
                       ),
                     ),
                     Align(
                       alignment: Alignment.bottomLeft,
                       child: Padding(
-                        padding:  EdgeInsets.only(bottom: 25, left: 20),
-                        child: Text(LoginViewModel.signedINUser.name??""),
+                        padding: EdgeInsets.only(bottom: 25, left: 20),
+                        child: Text(LoginViewModel.signedINUser.name ?? ""),
                       ),
                     )
                   ],
@@ -50,58 +54,83 @@ Widget HomeDrawer(HomeViewModel model, BuildContext context){
                 children: [
                   ListTile(
                     title: Text("Profile", style: heading3),
-                    leading: Icon(Icons.person, color: Colors.green,),
-                    onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileSettingView(),));
+                    leading: Icon(
+                      Icons.person,
+                      color: Colors.green,
+                    ),
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ProfileSettingView(),
+                          ));
                     },
                   ),
-                  Divider(height: 2,),
+                  Divider(
+                    height: 2,
+                  ),
                   ListTile(
                     title: Text("History", style: heading3),
                     leading: Icon(Icons.history, color: Colors.green),
-                    onTap: (){},
+                    onTap: () {},
                   ),
-                  Divider(height: 2,),
+                  Divider(
+                    height: 2,
+                  ),
                   ListTile(
                     title: Text("Help desk", style: heading3),
                     leading: Icon(Icons.help, color: Colors.green),
-                    onTap: (){},
+                    onTap: () {},
                   ),
-                  Divider(height: 2,),
+                  Divider(
+                    height: 2,
+                  ),
                   ListTile(
                     title: Text("Logout", style: heading3),
                     leading: Icon(Icons.logout, color: Colors.green),
-                    onTap: () async{
+                    onTap: () async {
                       final prefs = await SharedPreferences.getInstance();
                       await prefs.remove("user");
-                      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) =>  AuthView(),), (route) => false);
+                      HomeViewModel.driverMode = false;
+                      model.setBusy(false);
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => AuthView(),
+                          ),
+                          (route) => false);
                     },
                   ),
-                  Divider(height: 2,),
+                  Divider(
+                    height: 2,
+                  ),
                 ],
               )
             ],
           ),
         ),
         Align(
-          alignment: Alignment.bottomCenter,
-          child: Padding(
-            padding: const EdgeInsets.all(20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Text("Driver Mode"),
-                Switch(
-                  onChanged: (v){
-                    model.switchDriverMode(v);
-                    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => DriverHomeView(),), (route) => false);
-                  },
-                  value: HomeViewModel.driverMode
-                ),
-              ],
-            ),
-          )
-        )
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Text("Driver Mode"),
+                  Switch(
+                      onChanged: (v) {
+                        model.switchDriverMode(v);
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => DriverHomeView(),
+                            ),
+                            (route) => false);
+                      },
+                      value: HomeViewModel.driverMode),
+                ],
+              ),
+            ))
       ],
     ),
   );

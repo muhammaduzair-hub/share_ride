@@ -1,5 +1,9 @@
+import 'dart:convert';
+
+import 'package:RideShare/data/model/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../constants/strings.dart';
 import '../../viewmodels/views/login_viewmodel.dart';
@@ -234,7 +238,19 @@ class AuthView extends StatelessWidget {
   }
 
   Widget signIn(BuildContext context, Size size) {
+    List<UserModel> users = [];
+    final GlobalKey _textFieldKey = GlobalKey();
+
     return BaseWidget<LoginViewModel>(
+      onModelReady: (_) async {
+        final prefs = await SharedPreferences.getInstance();
+        final user = await prefs.getStringList("allUsers") ?? [];
+        if (user.isNotEmpty) {
+          users = user
+              .map((userJson) => UserModel.fromJson(jsonDecode(userJson)))
+              .toList();
+        }
+      },
       //we use signup model for both
       model:
           LoginViewModel(authRepository: Provider.of(context, listen: false)),
@@ -270,7 +286,66 @@ class AuthView extends StatelessWidget {
                   UIHelper.verticalSpaceMedium,
                   const Text(LabelEmail, style: boldHeading3),
                   UIHelper.verticalSpaceSmall,
-                  CustomTextField(
+                  TextField(
+                    // key: _textFieldKey,
+                    onTap: () {
+                      if (users.isNotEmpty) {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                  content: ListView.separated(
+                                shrinkWrap: true,
+                                itemCount: users.length,
+                                itemBuilder: (context, index) => ListTile(
+                                  title: Text(users[index].email ?? ""),
+                                  subtitle: Text(users[index]
+                                          .password
+                                          ?.replaceAll(RegExp(r"."), "*") ??
+                                      ""),
+                                  onTap: () {
+                                    snumberController.text =
+                                        users[index].email!;
+                                    spasswordController.text =
+                                        users[index].password!;
+                                    model.setBusy(false);
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                                separatorBuilder: (context, index) => Divider(
+                                  height: 2,
+                                ),
+                              ));
+                            });
+                      }
+                      // showMenu(
+                      //   context: context,
+                      //   position: RelativeRect.fromLTRB(0, 0, 0, 0),
+                      //   items: users.map((UserModel item) {
+                      //     return PopupMenuItem<UserModel>(
+                      //       value: item,
+                      //       child:
+                      //     );
+                      //   }).toList(),
+                      // );
+                    },
+                    decoration: InputDecoration(
+                      contentPadding: EdgeInsets.only(
+                        left: 10,
+                        bottom: 0.5,
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15),
+                        borderSide: BorderSide(color: Color(0xffD5DDE0)),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15),
+                        borderSide: BorderSide(color: Color(0xffD5DDE0)),
+                      ),
+                      fillColor: Colors.grey
+                          .shade100, //Color(0xffF7F8F9),//Colors.grey.shade200,
+                      filled: true,
+                    ),
                     controller: snumberController,
                   ),
                   if (model.phoneState == false)
